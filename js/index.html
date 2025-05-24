@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+a {
+	text-decoration: none;
+}
+
+li {
+	list-style: none;
+}
+:root {
+	--poppins: 'Poppins', sans-serif;
+	--lato: 'Lato', sans-serif;
+
+	--light: #F9F9F9;
+	--blue: #3C91E6;
+	--light-blue: #CFE8FF;
+	--grey: #eee;
+	--dark-grey: #AAAAAA;
+	--dark: #342E37;
+	--red: #DB504A;
+	--yellow: #FFCE26;
+	--light-yellow: #FFF2C6;
+	--orange: #FD7238;
+	--light-orange: #FFE0D3;
+}
+
+html {
+	overflow-x: hidden;
+}
+
+body.dark {
+	--light: #0C0C1E;
+	--grey: #060714;
+	--dark: #FBFBFB;
+}
+
+body {
+    background: var(--grey);
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+/* Navbar Styles */
+.navbar {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 15px 0;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ff6b6b !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navbar-brand i {
+    font-size: 1.8rem;
+    color: #ff6b6b;
+}
+
+.nav-link {
+    font-weight: 500;
+    color: #343a40;
+    padding: 8px 16px !important;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    margin: 0 4px;
+}
+
+.nav-link:hover {
+    color: #ff6b6b;
+    background-color: rgba(255, 107, 107, 0.1);
+}
+
+.nav-link.active {
+    color: #ff6b6b;
+    background-color: rgba(255, 107, 107, 0.1);
+}
+
+.nav-link i {
+    margin-right: 6px;
+    font-size: 1.2rem;
+}
+
+/* Search Input */
+.search-input {
+    border-radius: 20px 0 0 20px;
+    border: 1px solid #e9ecef;
+    padding: 8px 16px;
+    min-width: 250px;
+}
+
+.btn-search {
+    border-radius: 0 20px 20px 0;
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+}
+
+.btn-search:hover {
+    background-color: #fa5252;
+    color: white;
+}
+
+/* Theme Switch */
+.theme-switch {
+    margin-left: 16px;
+}
+
+.switch-mode {
+    width: 44px;
+    height: 22px;
+    background-color: #e9ecef;
+    border-radius: 25px;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.switch-mode::before {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: white;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s ease;
+}
+
+#switch-mode:checked + .switch-mode {
+    background-color: #ff6b6b;
+}
+
+#switch-mode:checked + .switch-mode::before {
+    transform: translateX(22px);
+}
+
+@media (max-width: 992px) {
+    .navbar-nav {
+        margin: 16px 0;
+    }
+    
+    .search-input {
+        min-width: 200px;
+    }
+    
+    .theme-switch {
+        margin: 16px 0;
+    }
+}
+
+/* CONTENT */
+#content {
+    position: relative;
+    width: 100%;
+    left: 0;
+    transition: .3s ease;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#sidebar.hide ~ #content {
+    width: 100%;
+    left: 0;
+}
+
+#content nav a {
+	color: var(--dark);
+}
+#content nav .bx.bx-menu {
+	cursor: pointer;
+	color: var(--dark);
+}
+#content nav .nav-link {
+	font-size: 16px;
+	transition: .3s ease;
+}
+#content nav .nav-link:hover {
+	color: var(--blue);
+}
+#content nav form {
+	max-width: 400px;
+	width: 100%;
+	margin-right: auto;
+}
+#content nav form .form-input {
+	display: flex;
+	align-items: center;
+	height: 36px;
+}
+#content nav form .form-input input {
+	flex-grow: 1;
+	padding: 0 16px;
+	height: 100%;
+	border: none;
+	background: var(--grey);
+	border-radius: 36px 0 0 36px;
+	outline: none;
+	width: 100%;
+	color: var(--dark);
+}
+
+#content nav form .form-input button {
+	width: 36px;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: var(--blue);
+	color: var(--light);
+	font-size: 18px;
+	border: none;
+	outline: none;
+	border-radius: 0 36px 36px 0;
+	cursor: pointer;
+}
+#content nav .notification {
+	font-size: 20px;
+	position: relative;
+}
+#content nav .notification .num {
+	position: absolute;
+	top: -6px;
+	right: -6px;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	border: 2px solid var(--light);
+	background: var(--red);
+	color: var(--light);
+	font-weight: 700;
+	font-size: 12px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#content nav .profile img {
+	width: 36px;
+	height: 36px;
+	object-fit: cover;
+	border-radius: 50%;
+}
+#content nav .switch-mode {
+	display: block;
+	min-width: 50px;
+	height: 25px;
+	border-radius: 25px;
+	background: var(--grey);
+	cursor: pointer;
+	position: relative;
+}
+#content nav .switch-mode::before {
+	content: '';
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	bottom: 2px;
+	width: calc(25px - 4px);
+	background: var(--blue);
+	border-radius: 50%;
+	transition: all .3s ease;
+}
+#content nav #switch-mode:checked + .switch-mode::before {
+	left: calc(100% - (25px - 4px) - 2px);
+}
+/* NAVBAR */
+#content nav {
+	height: 56px;
+	background: var(--light);
+	padding: 0 24px;
+	display: flex;
+	align-items: center;
+	grid-gap: 24px;
+	font-family: var(--lato);
+	position: sticky;
+	top: 0;
+	left: 0;
+    margin-right: 30px;
+}
+
+
+
+
+/* MAIN */
+#content main {
+	width: 100%;
+	padding: 36px 24px;
+	font-family: var(--poppins);
+	max-height: calc(100vh - 56px);
+	overflow-y: auto;
+}
+#content main .head-title {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	grid-gap: 16px;
+	flex-wrap: wrap;
+}
+#content main .head-title .left h1 {
+	font-size: 36px;
+	font-weight: 600;
+	margin-bottom: 10px;
+	color: var(--dark);
+}
+#content main .head-title .left .breadcrumb {
+	display: flex;
+	align-items: center;
+	grid-gap: 16px;
+}
+#content main .head-title .left .breadcrumb li {
+	color: var(--dark);
+}
+#content main .head-title .left .breadcrumb li a {
+	color: var(--dark-grey);
+	pointer-events: none;
+}
+#content main .head-title .left .breadcrumb li a.active {
+	color: var(--blue);
+	pointer-events: unset;
+}
+#content main .head-title .btn-download {
+	height: 36px;
+	padding: 0 16px;
+	border-radius: 36px;
+	background: var(--blue);
+	color: var(--light);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	grid-gap: 10px;
+	font-weight: 500;
+}
+
+
+
+
+#content main .box-info {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	grid-gap: 24px;
+	margin-top: 36px;
+}
+#content main .box-info li {
+	padding: 24px;
+	background: var(--light);
+	border-radius: 20px;
+	display: flex;
+	align-items: center;
+	grid-gap: 24px;
+}
+#content main .box-info li .bx {
+	width: 80px;
+	height: 80px;
+	border-radius: 10px;
+	font-size: 36px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#content main .box-info li:nth-child(1) .bx {
+	background: var(--light-blue);
+	color: var(--blue);
+}
+#content main .box-info li:nth-child(2) .bx {
+	background: var(--light-yellow);
+	color: var(--yellow);
+}
+#content main .box-info li:nth-child(3) .bx {
+	background: var(--light-orange);
+	color: var(--orange);
+}
+#content main .box-info li .text h3 {
+	font-size: 24px;
+	font-weight: 600;
+	color: var(--dark);
+}
+#content main .box-info li .text p {
+	color: var(--dark);	
+}
+
+
+.content {
+    flex: 1;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.content-wrapper {
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    transition: all 0.3s ease;
+    padding: 0 16px;
+}
+
+#sidebar.hide ~ #content .content-wrapper {
+    max-width: 1200px; /* atau bisa kamu ganti 960px/1100px sesuai selera */
+}
+
+
+
+#content main .table-data {
+	display: flex;
+	flex-wrap: wrap;
+	grid-gap: 24px;
+	margin-top: 24px;
+	width: 100%;
+	color: var(--dark);
+}
+#content main .table-data > div {
+	border-radius: 20px;
+	background: var(--light);
+	padding: 24px;
+	overflow-x: auto;
+}
+#content main .table-data .head {
+	display: flex;
+	align-items: center;
+	grid-gap: 16px;
+	margin-bottom: 24px;
+}
+#content main .table-data .head h3 {
+	margin-right: auto;
+	font-size: 24px;
+	font-weight: 600;
+}
+#content main .table-data .head .bx {
+	cursor: pointer;
+}
+
+#content main .table-data .order {
+	flex-grow: 1;
+	flex-basis: 500px;
+}
+#content main .table-data .order table {
+	width: 100%;
+	border-collapse: collapse;
+}
+#content main .table-data .order table th {
+	padding-bottom: 12px;
+	font-size: 13px;
+	text-align: left;
+	border-bottom: 1px solid var(--grey);
+}
+#content main .table-data .order table td {
+	padding: 16px 0;
+}
+#content main .table-data .order table tr td:first-child {
+	display: flex;
+	align-items: center;
+	grid-gap: 12px;
+	padding-left: 6px;
+}
+#content main .table-data .order table td img {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+#content main .table-data .order table tbody tr:hover {
+	background: var(--grey);
+}
+#content main .table-data .order table tr td .status {
+	font-size: 10px;
+	padding: 6px 16px;
+	color: var(--light);
+	border-radius: 20px;
+	font-weight: 700;
+}
+#content main .table-data .order table tr td .status.completed {
+	background: var(--blue);
+}
+#content main .table-data .order table tr td .status.process {
+	background: var(--yellow);
+}
+#content main .table-data .order table tr td .status.pending {
+	background: var(--orange);
+}
+
+
+#content main .table-data .todo {
+	flex-grow: 1;
+	flex-basis: 300px;
+}
+#content main .table-data .todo .todo-list {
+	width: 100%;
+}
+#content main .table-data .todo .todo-list li {
+	width: 100%;
+	margin-bottom: 16px;
+	background: var(--grey);
+	border-radius: 10px;
+	padding: 14px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+#content main .table-data .todo .todo-list li .bx {
+	cursor: pointer;
+}
+#content main .table-data .todo .todo-list li.completed {
+	border-left: 10px solid var(--blue);
+}
+#content main .table-data .todo .todo-list li.not-completed {
+	border-left: 10px solid var(--orange);
+}
+#content main .table-data .todo .todo-list li:last-child {
+	margin-bottom: 0;
+}
+/* MAIN */
+/* CONTENT */
+
+.product-img {
+    width: 100%;
+    height: 250px; /* Atur tinggi tetap */
+    object-fit: cover; /* Gambar tetap proporsional dan memenuhi area */
+    border-top-left-radius: 0.375rem;
+    border-top-right-radius: 0.375rem;
+}
+
+
+
+
+@media screen and (max-width: 768px) {
+	#sidebar {
+		width: 200px;
+	}
+
+	#content {
+		width: calc(100% - 60px);
+		left: 200px;
+	}
+
+	#content nav .nav-link {
+		display: none;
+	}
+}
+
+
+
+
+
+
+@media screen and (max-width: 576px) {
+	#content nav form .form-input input {
+		display: none;
+	}
+
+	#content nav form .form-input button {
+		width: auto;
+		height: auto;
+		background: transparent;
+		border-radius: none;
+		color: var(--dark);
+	}
+
+	#content nav form.show .form-input input {
+		display: block;
+		width: 100%;
+	}
+	#content nav form.show .form-input button {
+		width: 36px;
+		height: 100%;
+		border-radius: 0 36px 36px 0;
+		color: var(--light);
+		background: var(--red);
+	}
+
+	#content nav form.show ~ .notification,
+	#content nav form.show ~ .profile {
+		display: none;
+	}
+
+	#content main .box-info {
+		grid-template-columns: 1fr;
+	}
+
+	#content main .table-data .head {
+		min-width: 420px;
+	}
+	#content main .table-data .order table {
+		min-width: 420px;
+	}
+	#content main .table-data .todo .todo-list {
+		min-width: 420px;
+	}
+}
+
+        /* Profile Image Styling */
+        .profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white; /* Latar belakang putih */
+            padding: 3px; /* Padding agar lebih rapi */
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Efek bayangan */
+            position: relative;
+            top: -10px;
+        }
+
+		#sidebar.hide {
+    width: 0;
+    overflow: hidden;
+}
+#sidebar.hide ~ #content {
+    left: 0;
+    width: 100%;
+}
+
+
+/* Tambahkan transisi untuk efek toggle */
+#sidebar {
+  transition: width 0.3s ease;
+}
+.carousel-item {
+  height: 500px;
+  position: relative;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 0 15%;
+}
+
+.carousel-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.carousel-caption {
+  z-index: 2;
+  position: absolute;
+}
+
+@media (max-width: 768px) {
+  .carousel-item {
+    height: 300px;
+  }
+}
+
+#loader {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.5s ease;
+}
+
+#loader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+#product-categories img {
+    transition: transform 0.3s ease;
+  }
+
+  #product-categories img:hover {
+    transform: scale(1.25);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+
+  #product-categories p {
+    font-size: 0.95rem;
+	
+  }
+  .category-item p {
+    transition: transform 0.3s ease;
+  }
+
+  .category-item:hover p {
+    transform: translateY(11px);
+  }
+
+  .row.flex-nowrap {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+.row.flex-nowrap::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.row.flex-nowrap > .col-8 {
+  flex: 0 0 auto;
+}
+
+/* hight */
+  /* Tombol bulat putih dengan icon oranye */
+  .scroll-btn {
+    background-color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    border: none;
+  }
+
+  .scroll-btn i {
+    color: orange;
+    font-size: 18px;
+  }
+
+  .scroll-btn:hover {
+    background-color: #f9f9f9;
+    transform: scale(1.05);
+  }
+
+  /* Hapus background abu-abu */
+  #galleryRow {
+    background-color: transparent;
+    scrollbar-width: none; /* Firefox */
+  }
+
+  #galleryRow::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+  .highlighted-gallery-wrapper {
+    position: relative;
+  }
+  @media (max-width: 768px) {
+    .scroll-btn {
+      display: none;
+    }
+  }
+  footer {
+    width: 100vw;
+    margin-top: 50px;
+    padding: 40px 0;
+    background-color: #222;
+    color: #fff;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ff6b6b;
+}
+
+.footer-brand i {
+    font-size: 2rem;
+}
+
+footer h5 {
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #ff6b6b;
+    font-size: 1.1rem;
+}
+
+footer ul li {
+    margin-bottom: 12px;
+}
+
+footer ul li i {
+    font-size: 0.8rem;
+    margin-right: 5px;
+}
+
+footer a {
+    color: #ccc;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+footer a:hover {
+    color: #ff6b6b;
+    padding-left: 5px;
+}
+
+.text-light-gray {
+    color: #ccc;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.contact-info li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ccc;
+    font-size: 0.95rem;
+}
+
+.contact-info li i {
+    color: #ff6b6b;
+    font-size: 1.2rem !important;
+}
+
+.social-links a {
+    background-color: rgba(255, 107, 107, 0.1);
+    width: 35px;
+    height: 35px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    background-color: #ff6b6b;
+    color: white;
+    transform: translateY(-3px);
+    padding-left: 0;
+}
+
+.social-links i {
+    font-size: 1.2rem;
+}
+
+footer hr {
+    border-color: rgba(255, 255, 255, 0.1);
+    margin: 30px 0;
+}
+
+@media (max-width: 768px) {
+    footer {
+        text-align: center;
+    }
+    
+    .footer-brand {
+        justify-content: center;
+    }
+    
+    .contact-info li {
+        justify-content: center;
+    }
+    
+    footer .col-md-4, 
+    footer .col-md-2, 
+    footer .col-md-3 {
+        margin-bottom: 30px;
+    }
+}
+.btn-warning {
+    background-color: #ff6b6b !important;
+    border-color: #ff6b6b !important;
+    color: white !important;
+    transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+    background-color: #fa5252 !important;
+    border-color: #fa5252 !important;
+    transform: translateY(-2px);
+}
+
+.carousel-caption .btn-warning {
+    padding: 8px 25px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+.btn-primary {
+    background-color: #ff6b6b !important;
+    border-color: #ff6b6b !important;
+    color: white !important;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #fa5252 !important;
+    border-color: #fa5252 !important;
+    transform: translateY(-2px);
+}
+</style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+         <div id="loader">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class='bx bxs-store'></i>
+                FigureStore
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('home') }}">
+                            <i class='bx bxs-home'></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('store') }}">
+                            <i class='bx bxs-shopping-bag-alt'></i> Store
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class='bx bxs-category'></i> Categories
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="list.html">
+                            <i class='bx bxs-heart'></i> Wishlist
+                        </a>
+                    </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="AI.html">
+                           <i class='bx bxs-chat'></i>AI Asistens
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <form class="d-flex me-3">
+                        <div class="input-group">
+                            <input type="search" class="form-control search-input" placeholder="Search...">
+                            <button class="btn btn-search" type="submit">
+                                <i class='bx bx-search'></i>
+                            </button>
+                        </div>
+                    </form>
+                    <div class="theme-switch">
+                        <input type="checkbox" id="switch-mode" hidden>
+                        <label for="switch-mode" class="switch-mode"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <div class="content mt-5 pt-4">
+		<!-- NAVBAR -->
+
+		<section id="home" >
+			<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+			  <div class="carousel-indicators">
+				<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+				<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+				<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+			  </div>
+			  <div class="carousel-inner">
+				<div class="carousel-item active">
+				  <img src="https://preview.redd.it/my-latest-work-jing-yuan-enjoy-v0-729hf6i4am4b1.jpg?width=640&crop=smart&auto=webp&s=7342eee58c9298e2ee468863990bcae6a3a4eaae" class="d-block w-100" alt="...">
+				  <div class="carousel-caption">
+					<h5>Your figure is waiting for you</h5>
+					<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque consequatur inventore velit sint. Amet, veritatis!</p>
+					<p><a href="More.html" class="btn btn-warning mt3">Learn more</a></p>
+				  </div>
+				</div>
+				<div class="carousel-item">
+				  <img src="https://cdn.wallpapersafari.com/14/31/XtvQc6.jpg" class="d-block w-100" alt="...">
+				  <div class="carousel-caption">
+					<h5>Your Figure is waiting for you</h5>
+					<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque consequatur inventore velit sint. Amet, veritatis!</p>
+					<p><a href="More.html" class="btn btn-warning mt3">Learn more</a></p>
+				  </div>
+				</div>
+				<div class="carousel-item">
+				  <img src="https://motionbgs.com/media/5055/welt-yang.jpg" class="d-block w-100" alt="...">
+				  <div class="carousel-caption">
+					<h5>Your Figure is waiting for you</h5>
+					<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque consequatur inventore velit sint. Amet, veritatis!</p>
+					<p><a href="More.html" class="btn btn-warning mt3">Learn more</a></p>
+				  </div>
+				</div>
+			  </div>
+			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			  </button>
+			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			  </button>
+			</div>
+		  </section>
+  
+		  <section id="product-categories" class="container mt-5 mb-5">
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6">
+            <h3 class="fw-bold mb-0">Product Categories</h3>
+        </div>
+        <div class="col-md-6 text-md-end">
+            <p class="text-muted mb-0">Temukan kategori favoritmu</p>
+        </div>
+    </div>
+			<div class="row justify-content-center text-center g-4">
+			  <div class="col-6 col-md-2 category-item">
+				<img src="https://cdn.kyou.id/items/362819-exclusive-sale-nendoroid-sunday-honkai-star-rail.jpg" class="img-fluid rounded shadow-sm" alt="Nendoroid">
+				<p class="mt-2 fw-semibold">Nendoroid</p>
+			  </div>
+			  <div class="col-6 col-md-2 category-item">
+				<img src="https://images.tokopedia.net/img/cache/700/product-1/2019/7/3/5804803/5804803_5bc488c8-5f26-4611-824c-2bef7f192ef5" class="img-fluid rounded shadow-sm" alt="Figma">
+				<p class="mt-2 fw-semibold">Figma</p>
+			  </div>
+			  <div class="col-6 col-md-2 category-item">
+				<img src="https://cdn.kyou.id/items/327265-plamatea-toki-asuma-blue-archive.jpg" class="img-fluid rounded shadow-sm" alt="Model Kit">
+				<p class="mt-2 fw-semibold">Model Kit</p>
+			  </div>
+			  <div class="col-6 col-md-2 category-item">
+				<a href="{{ route('plush') }}" class="text-decoration-none text-dark">
+					<img src="https://cdn.kyou.id/items/237512-flash-po-sousou-no-frieren-plushie-frieren-17cm-1780577040.jpg" class="img-fluid rounded shadow-sm" alt="Plush">
+				  <p class="mt-2 fw-semibold">Plush</p>
+				</a>
+			  </div>
+			  <div class="col-6 col-md-2 category-item">
+				<a href="{{ route('manga') }}" class="text-decoration-none text-dark">
+				  <img src="https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//91/MTA-53412660/shueisha_shueisha_full01.jpg" class="img-fluid rounded shadow-sm" alt="manga">
+				  <p class="mt-2 fw-semibold">Manga</p>
+				</a>
+			  </div>
+			  
+		  </section>
+		  
+
+    <div class="main" style="margin-top: 100px;">
+        <div class="content-wrapper flex-grow-1">
+        <div class="row mt-5">
+          <!-- Produk 1 -->
+		  <h3 class="fw-bold mb-4"> Product best saller</h3>
+<div class="col-md-4 mb-4">
+    <div class="card card-product">
+        <img src="https://www.goodsmile.com/gsc-webrevo-sdk-storage-prd/product/image/1137566/yPqaKrGZ8eSfx43JMdmW59cukwVLnFzh.jpg" class="card-img-top product-img" alt="Produk A">
+        <div class="card-body">
+            <h5 class="card-title">Figure Eula</h5>
+            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus perferendis excepturi temporibus? Nam, quod laudantium?</p>
+            <p class="text-success fw-bold">Rp 300.000</p>
+            <a href="#" class="btn btn-primary w-100">Beli</a>
+        </div>
+    </div>
+</div>
+
+<!-- Produk 2 -->
+<div class="col-md-4 mb-4">
+    <div class="card card-product">
+        <img src="https://images.tokopedia.net/img/cache/700/VqbcmM/2023/3/10/8132925d-2a9a-4b94-815d-4d770205997a.png" class="card-img-top product-img" alt="Produk B">
+        <div class="card-body">
+            <h5 class="card-title">Figure Hutao</h5>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa blanditiis excepturi modi quibusdam animi accusamus.</p>
+            <p class="text-success fw-bold">Rp 149.000</p>
+            <a href="#" class="btn btn-primary w-100">Beli</a>
+        </div>
+    </div>
+</div>
+
+<!-- Produk 3 -->
+<div class="col-md-4 mb-4">
+    <div class="card card-product">
+        <img src="https://upload-os-bbs.hoyolab.com/upload/2022/07/24/97238136/98bef38695b657bab6d5a6764bc63112_2722069573461968257.jpg?x-oss-process=image%2Fresize%2Cs_1000%2Fauto-orient%2C0%2Finterlace%2C1%2Fformat%2Cwebp%2Fquality%2Cq_70" class="card-img-top product-img" alt="Produk C">
+        <div class="card-body">
+            <h5 class="card-title">Figure Zhongli</h5>
+            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, rerum aut. Modi totam at quod?</p>
+            <p class="text-success fw-bold">Rp 420.000</p>
+            <a href="#" class="btn btn-primary w-100">Beli</a>
+        </div>
+    </div>
+</div>
+
+  <div class="col-md-4 mb-4">
+    <div class="card card-product">
+        <img src="https://genshinfans.com/cdn/shop/files/ZT04_67793d54-d0cb-4341-bc82-06e42f65e1bc.jpg?v=1690965385" class="card-img-top product-img" alt="Produk A">
+        <div class="card-body">
+            <h5 class="card-title">Figure Eula</h5>
+            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus perferendis excepturi temporibus? Nam, quod laudantium?</p>
+            <p class="text-success fw-bold">Rp 300.000</p>
+            <a href="#" class="btn btn-primary w-100">Beli</a>
+        </div>
+    </div>
+</div>
+  <div class="col-md-4 mb-4">
+    <div class="card card-product">
+        <img src="https://genshinfans.com/cdn/shop/files/ZT04_67793d54-d0cb-4341-bc82-06e42f65e1bc.jpg?v=1690965385" class="card-img-top product-img" alt="Produk A">
+        <div class="card-body">
+            <h5 class="card-title">Figure Eula</h5>
+            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus perferendis excepturi temporibus? Nam, quod laudantium?</p>
+            <p class="text-success fw-bold">Rp 300.000</p>
+            <a href="#" class="btn btn-primary w-100">Beli</a>
+        </div>
+    </div>
+</div>
+  <div class="col-md-4 mb-4">
+    <div class="card card-product">
+        <img src="https://genshinfans.com/cdn/shop/files/ZT04_67793d54-d0cb-4341-bc82-06e42f65e1bc.jpg?v=1690965385" class="card-img-top product-img" alt="Produk A">
+        <div class="card-body">
+            <h5 class="card-title">Figure Eula</h5>
+            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus perferendis excepturi temporibus? Nam, quod laudantium?</p>
+            <p class="text-success fw-bold">Rp 300.000</p>
+            <a href="#" class="btn btn-primary w-100">Beli</a>
+        </div>
+    </div>
+</div>
+<div class="col-md-4 mb-4">
+    <div class="card card-product">
+        <img src="https://www.goodsmile.com/gsc-webrevo-sdk-storage-prd/product/image/1137566/yPqaKrGZ8eSfx43JMdmW59cukwVLnFzh.jpg" class="card-img-top product-img" alt="Produk A">
+        <div class="card-body">
+            <h5 class="card-title">Figure Eula</h5>
+            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus perferendis excepturi temporibus? Nam, quod laudantium?</p>
+            <p class="text-success fw-bold">Rp 300.000</p>
+            <a href="#" class="btn btn-primary w-100">Beli</a>
+        </div>
+    </div>
+</div>
+
+<!-- Produk 2 -->
+<div class="col-md-4 mb-4">
+    <div class="card card-product">
+        <img src="https://images.tokopedia.net/img/cache/700/VqbcmM/2023/3/10/8132925d-2a9a-4b94-815d-4d770205997a.png" class="card-img-top product-img" alt="Produk B">
+        <div class="card-body">
+            <h5 class="card-title">Figure Hutao</h5>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa blanditiis excepturi modi quibusdam animi accusamus.</p>
+            <p class="text-success fw-bold">Rp 149.000</p>
+            <a href="#" class="btn btn-primary w-100">Beli</a>
+        </div>
+    </div>
+</div>
+
+<!-- Produk 3 -->
+<div class="col-md-4 mb-4">
+    <div class="card card-product">
+        <img src="https://upload-os-bbs.hoyolab.com/upload/2022/07/24/97238136/98bef38695b657bab6d5a6764bc63112_2722069573461968257.jpg?x-oss-process=image%2Fresize%2Cs_1000%2Fauto-orient%2C0%2Finterlace%2C1%2Fformat%2Cwebp%2Fquality%2Cq_70" class="card-img-top product-img" alt="Produk C">
+        <div class="card-body">
+            <h5 class="card-title">Figure Zhongli</h5>
+            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, rerum aut. Modi totam at quod?</p>
+            <p class="text-success fw-bold">Rp 420.000</p>
+            <a href="#" class="btn btn-primary w-100">Beli</a>
+        </div>
+    </div>
+</div>
+<section class="highlighted-gallery container mt-5 position-relative">
+	<h4 class="fw-bold mb-3">Highlighted Product Gallery</h4>
+  
+	<div class="highlighted-gallery-wrapper">
+
+		<!-- Tombol Geser Kiri -->
+		<button id="scrollLeft" class="btn scroll-btn position-absolute top-50 start-0 translate-middle-y">
+		  <i class="fas fa-chevron-left"></i>
+		</button>
+	  
+		<!-- Galeri scrollable -->
+		<div id="galleryRow" class="d-flex overflow-auto px-5">
+		    <div class="flex-shrink-0 me-3" style="width: 250px;">
+				<img src="https://cdn.kyou.id/carousel/472-b8f0be40-ee67-4a4d-b4ee-1f2b7cb82a7b.jpg" class="img-fluid rounded shadow-sm" alt="Banner 1">
+			  </div>
+			  <div class="flex-shrink-0 me-3" style="width: 250px;">
+				<img src="https://cdn.kyou.id/carousel/383-12a2d591-6213-46e5-9f37-7895298cb6c3.jpg" class="img-fluid rounded shadow-sm" alt="Banner 2">
+			  </div>
+			  <div class="flex-shrink-0 me-3" style="width: 250px;">
+				<img src="https://cdn.kyou.id/carousel/584-1a3f4ef7-6913-4207-836d-d95b5aa9d906.jpg" class="img-fluid rounded shadow-sm" alt="Banner 2">
+			  </div>
+			  <div class="flex-shrink-0 me-3" style="width: 250px;">
+				<img src="https://cdn.kyou.id/carousel/366-32ef7e82-c68e-4293-9dc6-d45ff0c47b82.jpg" class="img-fluid rounded shadow-sm" alt="Banner 2">
+			  </div>
+			  <div class="flex-shrink-0 me-3" style="width: 250px;">
+				<img src="https://cdn.kyou.id/carousel/340-bb3e1282-eb9a-47db-9459-825c64fa7cfa.jpg" class="img-fluid rounded shadow-sm" alt="Banner 2">
+			  </div>
+			  <div class="flex-shrink-0 me-3" style="width: 250px;">
+				<img src="https://cdn.kyou.id/carousel/328-122ba020-fc4f-4554-9c60-c2936bf4a876.jpg" class="img-fluid rounded shadow-sm" alt="Banner 2">
+			  </div>
+			  <div class="flex-shrink-0 me-3" style="width: 250px;">
+				<img src="https://cdn.kyou.id/carousel/291-f76674f6-d4bc-4147-b116-f5818ad07b40.jpg" class="img-fluid rounded shadow-sm" alt="Banner 2">
+			  </div>
+			  <div class="flex-shrink-0 me-3" style="width: 250px;">
+				<img src="https://cdn.kyou.id/carousel/275-87d9d058-98cd-4a76-8128-2d32ab9d9c78.jpg" class="img-fluid rounded shadow-sm" alt="Banner 2">
+			  </div>
+			  <div class="flex-shrink-0 me-3" style="width: 250px;">
+				<img src="https://cdn.kyou.id/carousel/245-875145ab-7373-4946-8931-fff6be5b01e8.jpg" class="img-fluid rounded shadow-sm" alt="Banner 2">
+			  </div>
+			  <div class="flex-shrink-0 me-3" style="width: 250px;">
+				<img src="https://cdn.kyou.id/carousel/244-a6cfb1fd-2aab-4082-97b8-64ec0977454c.jpg" class="img-fluid rounded shadow-sm" alt="Banner 2">
+			  </div>
+			  <div class="flex-shrink-0 me-3" style="width: 250px;">
+				<img src="https://cdn.kyou.id/carousel/217-042a2459-a55b-478e-a5a2-fe57e5d18ff2.jpg" class="img-fluid rounded shadow-sm" alt="Banner 2">
+			  </div>
+		</div>
+	  
+		<!-- Tombol Geser Kanan -->
+		<button id="scrollRight" class="btn scroll-btn position-absolute top-50 end-0 translate-middle-y">
+		  <i class="fas fa-chevron-right"></i>
+		</button>
+	  
+	  </div>
+	  
+  
+  <section class="trending-series container mt-5">
+	<h4 class="fw-bold mb-3">Popular & Trending Series</h4>
+	<div class="row flex-nowrap overflow-auto">
+	  <div class="col-8 col-md-4 col-lg-3 me-3">
+		<img src="https://cdn.kyou.id/carousel/133-66deb904-e469-4c8d-a6c8-d226abd939af.jpg" class="img-fluid rounded shadow-sm" alt="Series 1">
+	  </div>
+	  <div class="col-8 col-md-4 col-lg-3 me-3">
+		<img src="https://cdn.kyou.id/carousel/88-4370738b-8983-4a09-a3e6-750e502fd4f8.jpg" class="img-fluid rounded shadow-sm" alt="Series 2">
+	  </div>
+	  <div class="col-8 col-md-4 col-lg-3 me-3">
+		<img src="https://cdn.kyou.id/carousel/81-3568f9c0-f0d4-4e4c-b792-1237289ea084.jpg" class="img-fluid rounded shadow-sm" alt="Series 2">
+	  </div>
+	  	  <div class="col-8 col-md-4 col-lg-3 me-3">
+		<img src="https://cdn.kyou.id/carousel/77-c80c73da-a583-4992-b843-1671f569a8da.jpg" class="img-fluid rounded shadow-sm" alt="Series 2">
+	  </div>
+	</div>
+  </section>
+
+    </div> <!-- Tutup div content -->
+    
+    <div class="spacer mb-5"></div>
+    
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="footer-brand mb-4">
+                        <i class='bx bxs-store'></i>
+                        <span>FigureStore</span>
+                      
+                    </div>
+                    <p class="text-light-gray">Toko figure anime terpercaya dengan koleksi terlengkap dan original. Kami menyediakan berbagai merchandise anime berkualitas tinggi.</p>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5>Menu</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#"><i class='bx bx-chevron-right'></i> Home</a></li>
+                        <li><a href="#"><i class='bx bx-chevron-right'></i> Store</a></li>
+                        <li><a href="#"><i class='bx bx-chevron-right'></i> Categories</a></li>
+                        <li><a href="#"><i class='bx bx-chevron-right'></i> Wishlist</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5>Kategori</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#"><i class='bx bx-chevron-right'></i> Nendoroid</a></li>
+                        <li><a href="#"><i class='bx bx-chevron-right'></i> Figma</a></li>
+                        <li><a href="#"><i class='bx bx-chevron-right'></i> Model Kit</a></li>
+                        <li><a href="#"><i class='bx bx-chevron-right'></i> Scale Figure</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5>Hubungi Kami</h5>
+                    <ul class="list-unstyled contact-info">
+                        <li><i class='bx bxs-phone'></i> +62 123 456 789</li>
+                        <li><i class='bx bxs-envelope'></i> info@figurestore.com</li>
+                        <li><i class='bx bxs-map'></i> Bali, Indonesia</li>
+                    </ul>
+                    <div class="social-links mt-3">
+                        <a href="#" class="me-3"><i class='bx bxl-facebook'></i></a>
+                        <a href="#" class="me-3"><i class='bx bxl-instagram'></i></a>
+                        <a href="#" class="me-3"><i class='bx bxl-twitter'></i></a>
+                        <a href="#"><i class='bx bxl-youtube'></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2024 FigureStore. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-light me-3">Privacy Policy</a>
+                    <a href="#" class="text-light">Terms & Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+    window.addEventListener("load", function () {
+        const loader = document.getElementById("loader");
+        setTimeout(() => {
+            loader.classList.add("fade-out");
+        }, 1500);
+
+        // Tambahkan kode untuk gallery scroll
+        const gallery = document.getElementById('galleryRow');
+        const scrollLeftBtn = document.getElementById('scrollLeft');
+        const scrollRightBtn = document.getElementById('scrollRight');
+
+        if (scrollLeftBtn && scrollRightBtn && gallery) {
+            scrollLeftBtn.addEventListener('click', () => {
+                gallery.scrollBy({ left: -300, behavior: 'smooth' });
+            });
+            
+            scrollRightBtn.addEventListener('click', () => {
+                gallery.scrollBy({ left: 300, behavior: 'smooth' });
+            });
+        }
+    });
+    </script>
+	</script>
+</body>
+</html>
